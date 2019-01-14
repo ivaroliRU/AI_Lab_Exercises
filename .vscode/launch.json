@@ -1,0 +1,91 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Main<lab1>",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "lab1"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-NanoHTTPD<lab1>",
+            "request": "launch",
+            "mainClass": "NanoHTTPD",
+            "projectName": "lab1"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-GameSimulatorTest<lab1>",
+            "request": "launch",
+            "mainClass": "cs227b.teamIago.gameProver.GameSimulatorTest",
+            "projectName": "lab1"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-InvariantTest<lab1>",
+            "request": "launch",
+            "mainClass": "cs227b.teamIago.gameProver.InvariantTest",
+            "projectName": "lab1"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Axioms<lab1>",
+            "request": "launch",
+            "mainClass": "cs227b.teamIago.parser.Axioms",
+            "projectName": "lab1"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Parser<lab1>",
+            "request": "launch",
+            "mainClass": "cs227b.teamIago.parser.Parser",
+            "projectName": "lab1"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ProverTest<lab1>",
+            "request": "launch",
+            "mainClass": "cs227b.teamIago.resolver.ProverTest",
+            "projectName": "lab1"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-GameControllerCLIRunner<lab1>",
+            "request": "launch",
+            "mainClass": "tud.gamecontroller.game.javaprover.GameControllerCLIRunner",
+            "projectName": "lab1"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-GameControllerCLIRunner<lab1>(1)",
+            "request": "launch",
+            "mainClass": "tud.gamecontroller.game.jocular.GameControllerCLIRunner",
+            "projectName": "lab1"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-GameControllerApp<lab1>",
+            "request": "launch",
+            "mainClass": "tud.gamecontroller.gui.GameControllerApp",
+            "projectName": "lab1"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-RetraceGameControllerRunner<lab1>",
+            "request": "launch",
+            "mainClass": "tud.gamecontroller.traces.RetraceGameControllerRunner",
+            "projectName": "lab1"
+        }
+    ]
+}
