@@ -72,8 +72,10 @@ public class State {
 		
 		Coord goCoord = Coord.GetCoordFwd(agentPosition);
 		
-		if((goCoord.GetX() >= 0 || goCoord.GetX() < width
-			|| goCoord.GetY() >= 0 || goCoord.GetY() < height)
+		System.out.println("Agentpos: " + goCoord.GetX() + ", " + goCoord.GetY());
+		
+		if((goCoord.GetX() >= 0 && goCoord.GetX() < width
+			&& goCoord.GetY() >= 0 && goCoord.GetY() < height)
 			&& state[goCoord.GetX()][goCoord.GetY()] != 2) {
 			ret.add("GO");
 		}
@@ -132,7 +134,7 @@ public class State {
 	
 	public static boolean isSuccessorGoalState(State child) {
 		//only way to change the state is to remove dirt so this is a goal
-		if(child.numOfDirt != child.parent.numOfDirt) {
+		if(child.parent != null && child.numOfDirt != child.parent.numOfDirt) {
 			return true;
 		}
 		else {
