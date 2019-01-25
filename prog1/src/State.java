@@ -24,7 +24,7 @@ public class State {
 	
 	public State parent;
 		
-	State(int w, int h, Coord dirt[], Coord obsticales[], Coord agent, boolean on){
+	public State(int w, int h, Coord dirt[], Coord obsticales[], Coord agent, boolean on){
 		this.width = w;
 		this.height = h;
 		
@@ -46,7 +46,7 @@ public class State {
 		this.parent = null;
 	}
 	
-	State(State parent, int state[][], Coord agent, boolean on){
+	public State(State parent, int state[][], Coord agent, boolean on){
 		this.state = state;
 		this.width = parent.width;
 		this.height = parent.height;
