@@ -119,8 +119,9 @@ public class State {
 		return null;
 	}
 	
-	public static ArrayList<State> ComputeAllSuccessors(String[] moves, State parent){
+	public static ArrayList<State> ComputeAllSuccessors(State parent){
 		ArrayList<State> states = new ArrayList<State>();
+		String[] moves = parent.computeMoves();
 		
 		for(int i = 0; i < moves.length; i++) {
 			states.add(State.ComputeSuccessor(parent, moves[i]));
