@@ -57,7 +57,7 @@ public class DFS{
 	//Tester
 	public static void main(String[] args){
 		int w = 5, h = 5;
-		Coord dirt[] = {new Coord(0,1), /*new Coord(2,1), new Coord(1,2)*/};
+		Coord dirt[] = {new Coord(0,4), new Coord(2,2), new Coord(4,2)};
 		Coord obstacles[] = {new Coord(0,3)};
 		
 		State init = new State(w, h, dirt, obstacles, new Coord(0,1, 'N'), false);
