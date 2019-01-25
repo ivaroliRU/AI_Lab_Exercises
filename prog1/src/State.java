@@ -92,7 +92,6 @@ public class State {
 	public boolean isDirty() {
 		return (state[agentPosition.GetX()][agentPosition.GetY()] == 1)? true: false;
 	}
-
 	
 	//method to compute the successor state
 	public static State ComputeSuccessor(State parent, String move) {
@@ -119,6 +118,16 @@ public class State {
 		}
 		
 		return null;
+	}
+	
+	public static ArrayList<State> ComputeAllSuccessors(String[] moves, State parent){
+		ArrayList<State> states = new ArrayList<State>();
+		
+		for(int i = 0; i < moves.length; i++) {
+			states.add(State.ComputeSuccessor(parent, moves[i]));
+		}
+		
+		return states;
 	}
 	
 	public static boolean isSuccessorGoalState(State child) {
