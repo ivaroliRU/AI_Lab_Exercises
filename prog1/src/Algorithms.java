@@ -1,7 +1,7 @@
-import java.util.List;
+import java.util.ArrayList;
 
 public interface Algorithms {
 	
-	public List<String> search(State initstate);
+	public ArrayList<String> search(State initstate);
 
 }

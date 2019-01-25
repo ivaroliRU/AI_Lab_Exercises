@@ -25,7 +25,7 @@ public class State {
 	
 	public int numOfDirt;
 	
-	State(int w, int h, Coord dirt[], Coord obsticales[], Coord agent, boolean on){
+	State(int w, int h, Coord dirt[], Coord obstacles[], Coord agent, boolean on){
 		this.width = w;
 		this.height = h;
 		
@@ -39,7 +39,7 @@ public class State {
 			numOfDirt++;
 		}
 		
-		for(Coord c : obsticales) {
+		for(Coord c : obstacles) {
 			state[c.GetX()][c.GetY()] = 2;
 		}
 		
@@ -67,6 +67,11 @@ public class State {
 			return ret;
 		}
 		
+		if(isDirty()) {
+			String ret[] = {"SUCK"};
+			return ret;
+		}
+		
 		String moves[] = {"TURN_OFF", "TURN_RIGHT", "TURN_LEFT"};
 		List<String> ret = new ArrayList<String>(Arrays.asList(moves));
 		
@@ -74,18 +79,20 @@ public class State {
 		
 		System.out.println("Agentpos: " + goCoord.GetX() + ", " + goCoord.GetY());
 		
+		//try
 		if((goCoord.GetX() >= 0 && goCoord.GetX() < width
 			&& goCoord.GetY() >= 0 && goCoord.GetY() < height)
 			&& state[goCoord.GetX()][goCoord.GetY()] != 2) {
 			ret.add("GO");
 		}
-		
-		if(isDirty()) {
-			ret.add("SUCK");
-		}
+		//catch
+		//print("ILLEGAL MOVE!");
 		
 		String moveArray[] = new String[ret.size()];
 		moveArray = ret.toArray(moveArray);
+		for (String i : moveArray) {
+			System.out.println(i);
+		}
 		return moveArray;
 	}
 	
@@ -118,6 +125,7 @@ public class State {
 			return new State(parent, parent.state, rightAgentPosition, true);
 		}
 		
+		//Should never run
 		return null;
 	}
 	
@@ -133,11 +141,13 @@ public class State {
 	}
 	
 	public static boolean isSuccessorGoalState(State child) {
-		//only way to change the state is to remove dirt so this is a goal
+		//Only way to change?? the state is to remove dirt so this is a goal
 		if(child.parent != null && child.numOfDirt != child.parent.numOfDirt) {
 			return true;
 		}
 		else {
+			//Hægt að gera contains eða optimize-a??
+			//Checks if there is any dirt left in the grid
 			for(int x = 0; x < child.width; x++) {
 				for(int y = 0; y < child.height; y++) {
 					if(child.state[x][y] == 1) {
@@ -145,11 +155,14 @@ public class State {
 					}
 				}
 			}
+			//Since there is no dirt left in the grid
+			//agent only needs to return to his initial position
 			if(child.agentPosition.GetX() == child.agentInitPos.GetX() &&
 			   child.agentPosition.GetY() == child.agentInitPos.GetY()) {
 				return true;
 			}
 		}
+		// What is the state when this runs??
 		return false;
 	}
 	

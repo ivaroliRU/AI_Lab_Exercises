@@ -1,9 +1,9 @@
 //coordination
 //holds values for x and y
 public class Coord {
-	//x and y positon
+	//x and y position
 	int x,y;
-	//direction, N A S W
+	//direction, N E S W
 	char dir;
 	
 	Coord(int x, int y){
@@ -42,7 +42,7 @@ public class Coord {
 		case 'E':
 			return new Coord(c.GetX()+1, c.GetY(), direction);
 		}
-		
+		//Should never run
 		return null;
 	}
 	
@@ -60,6 +60,7 @@ public class Coord {
 			return new Coord(c.GetX(), c.GetY(), 'N');
 		}
 		
+		//Should never run
 		return null;
 	}
 	
@@ -77,6 +78,7 @@ public class Coord {
 			return new Coord(c.GetX(), c.GetY(), 'N');
 		}
 		
+		//Should never run
 		return null;
 	}
 }

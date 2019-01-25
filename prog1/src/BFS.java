@@ -1,12 +1,18 @@
-import java.util.List;
+import java.util.ArrayList;
 
 public class BFS implements Algorithms {
 
     public State state;
-    public List<State> oldStates;
-    public List<State> frontier;
+    public ArrayList<State> oldStates;
+    public ArrayList<State> expandedStates;
+    public ArrayList<State> frontiers;
+    
+    public BFS() {
+    	
+    }
 
-    public List<String> search(State state){
+    public ArrayList<String> search(State state){
+    	
         return null;
     }
 
