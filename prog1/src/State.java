@@ -22,6 +22,8 @@ public class State {
 	
 	public boolean isOn;
 	
+	public State parent;
+		
 	State(int w, int h, Coord dirt[], Coord obsticales[], Coord agent, boolean on){
 		this.width = w;
 		this.height = h;
@@ -39,8 +41,9 @@ public class State {
 			state[c.GetX()][c.GetY()] = 2;
 		}
 		
-		possibleMoves = computeMoves();
+		this.possibleMoves = computeMoves();
 		this.isOn = on;
+		this.parent = null;
 	}
 	
 	State(State parent, int state[][], Coord agent, boolean on){
@@ -51,6 +54,7 @@ public class State {
 		this.isOn = on;
 		this.possibleMoves = computeMoves();
 		this.agentInitPos = parent.agentInitPos;
+		this.parent = parent;
 	}
 	
 	//method to compute the legal moves
@@ -85,6 +89,19 @@ public class State {
 		return (state[agentPosition.GetX()][agentPosition.GetY()] == 1)? true: false;
 	}
 	
+	public static boolean sameState(int[][] state1, int[][] state, int w, int h) {
+		
+		for(int x = 0; x < w; x++) {
+			for(int y = 0; y < h; y++) {
+				if(state1[x][y] != state[x][y]) {
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+	
 	//method to compute the successor state
 	public static State ComputeSuccessor(State parent, String move) {
 		switch(move) {
@@ -108,9 +125,9 @@ public class State {
 		return null;
 	}
 	
-	public static boolean isSuccessorGoalState(State parent, State child) {
+	public static boolean isSuccessorGoalState(State child) {
 		//only way to change the state is to remove dirt so this is a goal
-		if(!parent.state.equals(child.state)) {
+		if(!State.sameState(child.parent.state, child.state, child.width, child.height)) {
 			return true;
 		}
 		else {
@@ -149,7 +166,7 @@ public class State {
 			System.out.print(successor.possibleMoves[i] + " ");
 		}
 		
-		if(State.isSuccessorGoalState(successor, init)) {
+		if(State.isSuccessorGoalState(successor)) {
 			System.out.print(" Is succ\n");
 		}
 		else {
@@ -162,7 +179,7 @@ public class State {
 			System.out.print(successor1.possibleMoves[i] + " ");
 		}
 		
-		if(State.isSuccessorGoalState(successor1, successor)) {
+		if(State.isSuccessorGoalState(successor1)) {
 			System.out.print(" Is succ\n");
 		}
 		else {
@@ -175,7 +192,7 @@ public class State {
 			System.out.print(successor2.possibleMoves[i] + " ");
 		}
 		
-		if(State.isSuccessorGoalState(successor2, successor1)) {
+		if(State.isSuccessorGoalState(successor2)) {
 			System.out.print(" Is succ\n");
 		}
 		else {
