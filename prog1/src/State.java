@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class State {
 	//width and height of the rectangle
 	public int width, height;
@@ -23,8 +22,10 @@ public class State {
 	public boolean isOn;
 	
 	public State parent;
-		
-	public State(int w, int h, Coord dirt[], Coord obsticales[], Coord agent, boolean on){
+	
+	public int numOfDirt;
+	
+	State(int w, int h, Coord dirt[], Coord obsticales[], Coord agent, boolean on){
 		this.width = w;
 		this.height = h;
 		
@@ -35,6 +36,7 @@ public class State {
 		
 		for(Coord c : dirt) {
 			state[c.GetX()][c.GetY()] = 1;
+			numOfDirt++;
 		}
 		
 		for(Coord c : obsticales) {
@@ -55,6 +57,7 @@ public class State {
 		this.possibleMoves = computeMoves();
 		this.agentInitPos = parent.agentInitPos;
 		this.parent = parent;
+		this.numOfDirt = parent.numOfDirt;
 	}
 	
 	//method to compute the legal moves
@@ -89,19 +92,6 @@ public class State {
 		return (state[agentPosition.GetX()][agentPosition.GetY()] == 1)? true: false;
 	}
 	
-	public static boolean sameState(int[][] state1, int[][] state, int w, int h) {
-		
-		for(int x = 0; x < w; x++) {
-			for(int y = 0; y < h; y++) {
-				if(state1[x][y] != state[x][y]) {
-					return false;
-				}
-			}
-		}
-		
-		return true;
-	}
-	
 	//method to compute the successor state
 	public static State ComputeSuccessor(State parent, String move) {
 		switch(move) {
@@ -109,8 +99,12 @@ public class State {
 			return new State(parent, parent.state, parent.agentPosition, true);
 		case "SUCK":
 			int newState[][] = parent.state;
+			
 			newState[parent.agentPosition.GetX()][parent.agentPosition.GetY()] = 0;
-			return new State(parent, newState, parent.agentPosition, true);
+			State returnState = new State(parent, newState, parent.agentPosition, true);
+			returnState.numOfDirt = parent.numOfDirt - 1;
+			
+			return returnState;
 		case "GO":
 			Coord goAgentPosition = Coord.GetCoordFwd(parent.agentPosition);
 			return new State(parent, parent.state, goAgentPosition, true);
@@ -125,9 +119,19 @@ public class State {
 		return null;
 	}
 	
+	public static ArrayList<State> ComputeAllSuccessors(String[] moves, State parent){
+		ArrayList<State> states = new ArrayList<State>();
+		
+		for(int i = 0; i < moves.length; i++) {
+			states.add(State.ComputeSuccessor(parent, moves[i]));
+		}
+		
+		return states;
+	}
+	
 	public static boolean isSuccessorGoalState(State child) {
 		//only way to change the state is to remove dirt so this is a goal
-		if(!State.sameState(child.parent.state, child.state, child.width, child.height)) {
+		if(child.numOfDirt != child.parent.numOfDirt) {
 			return true;
 		}
 		else {
