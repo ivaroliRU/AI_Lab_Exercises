@@ -49,6 +49,8 @@ public class DFS implements Algorithm{
 				oldStates.clear();
 			}
 			else if(success[1]) {
+				System.out.println("Number of looked at states: " + count);
+				System.out.println("Number of dirt left in the environment: " + s.numOfDirt);
 				return s;
 			}
 			

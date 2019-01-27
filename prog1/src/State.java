@@ -158,7 +158,9 @@ public class State {
 			//Since there is no dirt left in the grid
 			//agent only needs to return to his initial position
 			if(child.agentPosition.GetX() == child.agentInitPos.GetX() &&
-			   child.agentPosition.GetY() == child.agentInitPos.GetY()) {
+			   child.agentPosition.GetY() == child.agentInitPos.GetY() && 
+			   child.agentPosition.GetDirection() == child.agentInitPos.GetDirection() && 
+			   child.numOfDirt == 0) {
 				ret[0] = true;
 				ret[1] = true;
 				return ret;
