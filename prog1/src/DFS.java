@@ -1,40 +1,66 @@
 import java.util.ArrayList;
 
-public class DFS{
+public class DFS implements Algorithm{
 	public ArrayList<State> oldStates;
-	public ArrayList<State> frontiers;
+	public ArrayList<State> frontier;
 	
 	private int count;
 	
 	//Constructor
 	public DFS(State init) {
 		oldStates = new ArrayList<State>();
-		frontiers = new ArrayList<State>();
+		frontier = new ArrayList<State>();
 		count = 0;
-		frontiers.add(init);
+		frontier.add(init);
 	}
     
+	@Override
+	public String[] search() {
+		// TODO Auto-generated method stub
+		State next = dfs();
+		ArrayList<String> path = new ArrayList<String>();
+		
+		path.add("TURN_OFF");
+		
+		while(next.transition != null) {
+			path.add(next.transition);
+			next = next.parent;
+		}
+		
+		String pathArray[] = new String[path.size()];
+		
+		for(int i = path.size()-1; i >= 0; i--) {
+			int j = (path.size() - 1) - i;
+			pathArray[j] = path.get(i);
+		}
+		
+		return pathArray;
+	}
+	
 	public State dfs(){	
-		while(frontiers.size() > 0) {
-			State s = getNextState(frontiers);
+		while(frontier.size() > 0) {
+			State s = getNextState(frontier);
+			boolean[] success = State.isSuccessorGoalState(s);
 			
-			System.out.println("Count: " + count);
-			
-			if(s == null) {/*do something*/}
-			
-			if(State.isSuccessorGoalState(s)) {
+			if(success[0] && !success[1]) {
+				//empty the frontier and add this state back in
+				//empty the old states list
+				frontier.clear();
+				oldStates.clear();
+			}
+			else if(success[1]) {
 				return s;
 			}
 			
 			oldStates.add(s);
-			frontiers.remove(0);
+			frontier.remove(s);
 			count++;
 			
 			ArrayList<State> expandedStates = State.ComputeAllSuccessors(s);
 			
 			for(int i = 0; i < expandedStates.size(); i++) {
 				if(!oldStates.contains(expandedStates.get(i)) && expandedStates.get(i) != null) {
-					frontiers.add(expandedStates.get(i));
+					frontier.add(expandedStates.get(i));
 				}
 			}
 		}
@@ -60,9 +86,15 @@ public class DFS{
 		Coord dirt[] = {new Coord(0,4), new Coord(2,2), new Coord(4,2)};
 		Coord obstacles[] = {new Coord(0,3)};
 		
-		State init = new State(w, h, dirt, obstacles, new Coord(0,1, 'N'), false);
+		State init = new State(w, h, dirt, obstacles, new Coord(0,1, 'N'));
 		
 		DFS myDFS = new DFS(init);
-		State goalState = myDFS.dfs();
+		String[] path = myDFS.search();
+		
+		System.out.print("Path: ");
+		
+		for(String s: path) {
+			System.out.print(s + " ");
+		}
 	}
 }
