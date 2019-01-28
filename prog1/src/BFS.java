@@ -1,16 +1,17 @@
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class BFS implements Algorithm {
 
-    public ArrayList<State> oldStates;
+	public Hashtable<String, State> visited;
     public Queue<State> frontier;
     public int count;
     
     public BFS(State init) {
     	frontier = new LinkedList<>();
-    	oldStates = new ArrayList<State>();
+    	visited = new Hashtable<String, State>();
 		count = 0;
 		frontier.add(init);
     }
@@ -47,7 +48,7 @@ public class BFS implements Algorithm {
 				//empty the frontier to find another goal state
 				//empty the old states list
 				frontier.clear();
-				oldStates.clear();
+				visited.clear();
 			}
 			else if(success[1]) {
 				System.out.println("Number of looked at states: " + count);
@@ -55,15 +56,15 @@ public class BFS implements Algorithm {
 				return s;
 			}
 			
-			oldStates.add(s);
+			visited.put(s.toString(), s);
 			frontier.remove(s);
 			count++;
 			
 			ArrayList<State> expandedStates = State.ComputeAllSuccessors(s);
 			
-			for(int i = 0; i < expandedStates.size(); i++) {
-				if(!oldStates.contains(expandedStates.get(i)) && expandedStates.get(i) != null) {
-					frontier.add(expandedStates.get(i));
+			for(State es: expandedStates) {
+				if(es != null && !visited.containsKey(es.toString())) {
+					frontier.add(es);
 				}
 			}
 		}
@@ -88,5 +89,7 @@ public class BFS implements Algorithm {
   		for(String s: path) {
   			System.out.print(s + " ");
   		}
+  		
+  		System.out.println("\nSize of path:" + path.length);
   	}
 }

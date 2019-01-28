@@ -1,15 +1,18 @@
+import java.util.Stack;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class DFS implements Algorithm{
-	public ArrayList<State> oldStates;
-	public ArrayList<State> frontier;
+	//using hastable to minmize lookup cost
+	public Hashtable<String, State> visited;
+	public Stack<State> frontier;
 	
 	private int count;
 	
 	//Constructor
 	public DFS(State init) {
-		oldStates = new ArrayList<State>();
-		frontier = new ArrayList<State>();
+		visited = new Hashtable<String, State>();
+		frontier = new Stack<State>();
 		count = 0;
 		frontier.add(init);
 	}
@@ -39,14 +42,14 @@ public class DFS implements Algorithm{
 	
 	public State dfs(){	
 		while(frontier.size() > 0) {
-			State s = getNextState(frontier);
+			State s = frontier.pop();
 			boolean[] success = State.isSuccessorGoalState(s);
 			
 			if(success[0] && !success[1]) {
 				//empty the frontier and add this state back in
 				//empty the old states list
 				frontier.clear();
-				oldStates.clear();
+				visited.clear();
 			}
 			else if(success[1]) {
 				System.out.println("Number of looked at states: " + count);
@@ -54,31 +57,20 @@ public class DFS implements Algorithm{
 				return s;
 			}
 			
-			oldStates.add(s);
+			visited.put(s.toString(), s);
 			frontier.remove(s);
 			count++;
 			
 			ArrayList<State> expandedStates = State.ComputeAllSuccessors(s);
 			
-			for(int i = 0; i < expandedStates.size(); i++) {
-				if(!oldStates.contains(expandedStates.get(i)) && expandedStates.get(i) != null) {
-					frontier.add(expandedStates.get(i));
+			for(State es: expandedStates) {
+				if(es != null && !visited.containsKey(es.toString())) {
+					frontier.push(es);
 				}
 			}
 		}
 		
 		// Should never run
-		return null;
-	}
-	
-	private State getNextState(ArrayList<State> f) {
-		for(int i = 0; i < f.size(); i++) {
-			if(f.get(i) != null) {
-				/*System.out.println(f.get(i));
-				System.out.println("New state!");*/
-				return f.get(i);
-			}
-		}
 		return null;
 	}
 	
@@ -98,5 +90,7 @@ public class DFS implements Algorithm{
 		for(String s: path) {
 			System.out.print(s + " ");
 		}
+		
+		System.out.println("\nSize of path:" + path.length);
 	}
 }

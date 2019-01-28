@@ -30,8 +30,10 @@ public class RealAgent implements Agent
 			
 			if (perceptNameMatcher.matches()) {
 				String perceptName = perceptNameMatcher.group(1);
+				
 				if (perceptName.equals("HOME")) {
 					Matcher m = Pattern.compile("\\(\\s*HOME\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
+					
 					if (m.matches()) {
 						System.out.println("robot is at " + m.group(1) + "," + m.group(2));
 					}
@@ -45,5 +47,6 @@ public class RealAgent implements Agent
     }
 
     public String nextAction(Collection<String> percepts) {
+    	return null;
 	}
 }

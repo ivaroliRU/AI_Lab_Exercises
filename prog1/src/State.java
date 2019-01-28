@@ -61,6 +61,36 @@ public class State {
 		this.transition = transition;
 	}
 	
+	//return if the current agent position has dirt or not
+	public boolean isDirty() {
+		return (state[agentPosition.GetX()][agentPosition.GetY()] == 1)? true: false;
+	}
+	
+	//generate unique id from state to minimize
+	//lookup cost in algorithms
+	@Override
+	public String toString() {
+		String id = "";
+		
+		for(int x = 0; x < width; x++) {
+			for(int y = 0; y < height; y++) {
+				id += Integer.toString(state[x][y]);
+			}
+		}
+		
+		id += Integer.toString(this.agentPosition.GetX());
+		id += Integer.toString(this.agentPosition.GetY());
+		id += this.agentPosition.GetDirection();
+		
+		if(this.parent == null) {
+			id += "init";
+		}else {
+			id += "notinit";
+		}
+
+		return id;
+	}
+	
 	//method to compute the legal moves
 	private String[] computeMoves() {
 		if(parent == null) {
@@ -91,11 +121,6 @@ public class State {
 		moveArray = ret.toArray(moveArray);
 
 		return moveArray;
-	}
-	
-	//return if the current agent position has dirt or not
-	public boolean isDirty() {
-		return (state[agentPosition.GetX()][agentPosition.GetY()] == 1)? true: false;
 	}
 	
 	//method to compute the successor state
