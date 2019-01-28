@@ -131,4 +131,23 @@ public class AStar  implements Algorithm {
 		}
 	}
 
+	//Tester
+  	public static void main(String[] args){
+  		int w = 7, h = 7;
+  		Coord dirt[] = {new Coord(0,4), new Coord(2,2), new Coord(4,2)};
+  		Coord obstacles[] = {new Coord(0,3)};
+  		
+  		State init = new State(w, h, dirt, obstacles, new Coord(1,2, 'N'));
+  		
+  		Algorithm myDFS = new AStar(init);
+  		String[] path = myDFS.search();
+  		
+  		System.out.print("Path: ");
+  		
+  		for(String s: path) {
+  			System.out.print(s + " ");
+  		}
+  		
+  		System.out.println("\nSize of path:" + path.length);
+  	}
 }
