@@ -1,11 +1,15 @@
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RealAgent implements Agent
 {
 	Algorithm algo;
+	String path[];
+	int index = -1;
 	
 	public RealAgent(Algorithm algo) {
 		this.algo = algo;
@@ -13,19 +17,15 @@ public class RealAgent implements Agent
 	
 
     public void init(Collection<String> percepts) {
-		/*
-			Possible percepts are:
-			- "(SIZE x y)" denoting the size of the environment, where x,y are integers
-			- "(HOME x y)" with x,y >= 1 denoting the initial position of the robot
-			- "(ORIENTATION o)" with o in {"NORTH", "SOUTH", "EAST", "WEST"} denoting the initial orientation of the robot
-			- "(AT o x y)" with o being "DIRT" or "OBSTACLE" denoting the position of a dirt or an obstacle
-			Moving north increases the y coordinate and moving east increases the x coordinate of the robots position.
-			The robot is turned off initially, so don't forget to turn it on.
-		*/
 		Pattern perceptNamePattern = Pattern.compile("\\(\\s*([^\\s]+).*");
+		Coord agentCoord = new Coord(0,0,'N');
 		
-		for (String percept:percepts) {
-			
+		int w = 0,h = 0;
+		ArrayList<Coord> dirt = new ArrayList<Coord>();
+		ArrayList<Coord> obstacles = new ArrayList<Coord>();
+		
+		//taking in percept and constructing environment
+		for (String percept:percepts) {			
 			Matcher perceptNameMatcher = perceptNamePattern.matcher(percept);
 			
 			if (perceptNameMatcher.matches()) {
@@ -36,17 +36,68 @@ public class RealAgent implements Agent
 					
 					if (m.matches()) {
 						System.out.println("robot is at " + m.group(1) + "," + m.group(2));
+						agentCoord.x = Integer.parseInt(m.group(1)) - 1;
+						agentCoord.y = Integer.parseInt(m.group(2)) - 1;
 					}
-				} else {
-					System.out.println("other percept name:" + perceptName);
+					
+				} else if(perceptName.equals("AT")){
+					Matcher m1 = Pattern.compile("\\(\\s*AT\\s+DIRT\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
+					
+					if (m1.matches()) {
+						System.out.println("dirt is at " + m1.group(1) + "," + m1.group(2));
+						dirt.add(new Coord(Integer.parseInt(m1.group(1)) - 1,Integer.parseInt(m1.group(2)) - 1));
+					}
+					
+					Matcher m2 = Pattern.compile("\\(\\s*AT\\s+OBSTACLE\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
+					
+					if (m2.matches()) {
+						System.out.println("oabstacle is at " + m2.group(1) + "," + m2.group(2));
+						obstacles.add(new Coord(Integer.parseInt(m2.group(1)) - 1 ,Integer.parseInt(m2.group(2)) - 1));
+					}
+				} else if(perceptName.equals("ORIENTATION")) {
+					Matcher m = Pattern.compile("\\(\\s*ORIENTATION\\s+([A-Z]+)\\s*\\)").matcher(percept);
+					
+					if (m.matches()) {
+						System.out.println("Orientation is at " + m.group(1));
+						agentCoord.dir = m.group(1).charAt(0);
+					}
+				} else if(perceptName.equals("SIZE")) {
+					Matcher m = Pattern.compile("\\(\\s*SIZE\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
+					if (m.matches()) {
+						System.out.println("size is " + m.group(1) + "," + m.group(2));
+						w = Integer.parseInt(m.group(1));
+						h = Integer.parseInt(m.group(2));
+					}
 				}
 			} else {
 				System.err.println("strange percept that does not match pattern: " + percept);
 			}
 		}
+		
+		Coord dirtArray[] = new Coord[dirt.size()];
+		dirtArray = dirt.toArray(dirtArray);
+		
+		Coord obsArray[] = new Coord[obstacles.size()];
+		obsArray = obstacles.toArray(obsArray);
+		
+		State init = new State(w, h, dirtArray, obsArray, agentCoord);
+		
+		Instant starts = Instant.now();
+		path = algo.search(init);
+		Instant ends = Instant.now();
+		System.out.println("Time: " + Duration.between(starts, ends));
+		
+		System.out.print("Path: ");
+  		
+  		for(String s: path) {
+  			System.out.print(s + " ");
+  		}
+  		
+  		System.out.println("Number of states looked at: " + algo.getCount());
     }
 
     public String nextAction(Collection<String> percepts) {
-    	return null;
+		index += 1;
+		return path[index];
 	}
 }

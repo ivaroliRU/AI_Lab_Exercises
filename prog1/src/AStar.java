@@ -8,17 +8,18 @@ public class AStar  implements Algorithm {
     public PriorityQueue<Entry> frontier;
     public int count;
     
-    public AStar(State init) {
+    public AStar() {
     	frontier = new PriorityQueue<Entry>();
     	visited = new Hashtable<String, State>();
 		count = 0;
-		frontier.add(new Entry(0,init));
     }
 
     @Override
-	public String[] search() {
+	public String[] search(State init) {
 		// TODO Auto-generated method stub
-		State next = ucs();
+    	frontier.add(new Entry(0,init));
+		State next = astar();
+		
 		ArrayList<String> path = new ArrayList<String>();
 		
 		path.add("TURN_OFF");
@@ -38,43 +39,51 @@ public class AStar  implements Algorithm {
 		return pathArray;
 	}
     
-	public State ucs() {
-		while(frontier.size() > 0) {
-    		Entry pair = frontier.poll();
+    @Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return count;
+	}
+    
+	public State astar() {
+		State s = null;
+    	
+    	//while the frontier/agenda is not empty.....
+    	while(frontier.size() > 0) {
+    		//look at the next state in the frontier
+    		Entry e = frontier.poll();
+    		s = e.value;
+    		int cost = e.key;
+    		count++;
     		
-    		State currentState = pair.getValue();
-    		int childCost = pair.key + 1;
+    		//add the successor states to the frontier/agenda
+    		ArrayList<State> successors = State.ComputeAllSuccessors(s);
     		
-    		boolean[] success = State.isSuccessorGoalState(currentState);
-			
-			if(success[0] && !success[1]) {
-				//empty the frontier to find another goal state
-				//empty the old states list
-				frontier.clear();
-				visited.clear();
-			}
-			else if(success[1]) {
-				System.out.println("Number of looked at states: " + count);
-				System.out.println("Number of dirt left in the environment: " + currentState.numOfDirt);
-				return currentState;
-			}
-			
-			visited.put(currentState.toString(), currentState);
-			count++;
-			
-			ArrayList<State> expandedStates = State.ComputeAllSuccessors(currentState);
-			
-			for(State es: expandedStates) {
-				if(es != null && !visited.containsKey(es.toString())) {
-					//Take note that the only diffirence between UCS and A* is this
-					//we take in account the heuristical value AND the cost into the priority queue
-					frontier.add(new Entry(childCost + calculateHeuristic(es),es));
-				}
-			}
-		}
-		
-		// Should never run
-		return null;
+    		for(State successor: successors) {
+    			if(!visited.containsKey(successor.toString())) {
+    				Entry succ = new Entry((cost+1)+calculateHeuristic(successor),successor);// << this is making it a UCS
+    				
+    				frontier.add(succ);
+    			}
+    		}
+    		
+    		//if s is goal then stop and do a dance
+    		boolean[] success = State.isSuccessorGoalState(s);
+    		if(success[0] && !success[1]) {
+    			//if this is a goal state (and not the final goal state) then
+    			//remove everything from visited and go through the algorithm again
+    			visited.clear();
+    			
+    		}
+    		else if (success[1]){
+    			return s;
+    		}
+    		
+    		//mark s as visited
+    		visited.put(s.toString(), s);
+    	}
+    	
+    	return s;
 	}
 	
 	//A class that holds a cost and state pair to be able to enter into a priority queue
@@ -133,14 +142,14 @@ public class AStar  implements Algorithm {
 
 	//Tester
   	public static void main(String[] args){
-  		int w = 7, h = 7;
-  		Coord dirt[] = {new Coord(0,4), new Coord(2,2), new Coord(4,2)};
-  		Coord obstacles[] = {new Coord(0,3)};
+  		int w = 5, h = 5;
+		Coord dirt[] = {new Coord(0,2), new Coord(1,3), new Coord(3,0), new Coord(2,1), new Coord(4,4)};
+		Coord obstacles[] = {new Coord(0,1), new Coord(2,2), new Coord(2,3), new Coord(2,4), new Coord(4,2)};
+		
+		State init = new State(w, h, dirt, obstacles, new Coord(0,0, 'N'));
   		
-  		State init = new State(w, h, dirt, obstacles, new Coord(1,2, 'N'));
-  		
-  		Algorithm myDFS = new AStar(init);
-  		String[] path = myDFS.search();
+  		Algorithm myDFS = new AStar();
+  		String[] path = myDFS.search(init);
   		
   		System.out.print("Path: ");
   		

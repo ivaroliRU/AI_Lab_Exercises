@@ -103,7 +103,7 @@ public class State {
 			return ret;
 		}
 		
-		String moves[] = {"TURN_OFF", "TURN_RIGHT", "TURN_LEFT"};
+		String moves[] = {"TURN_RIGHT", "TURN_LEFT"};
 		List<String> ret = new ArrayList<String>(Arrays.asList(moves));
 		
 		Coord goCoord = Coord.GetCoordFwd(agentPosition);
@@ -156,7 +156,12 @@ public class State {
 		String[] moves = parent.computeMoves();
 		
 		for(int i = 0; i < moves.length; i++) {
-			states.add(State.ComputeSuccessor(parent, moves[i]));
+			State toAdd = State.ComputeSuccessor(parent, moves[i]);
+			
+			if(toAdd == null)
+				System.out.println("To add is null, move is: " + moves[i]);
+			states.add(toAdd);
+			//states.add(State.ComputeSuccessor(parent, moves[i]));
 		}
 		
 		return states;
@@ -193,5 +198,44 @@ public class State {
 		}
 		// What is the state when this runs??
 		return ret;
+	}
+	
+	//tester
+	public static void main(String[] args) {
+		int w = 5, h = 5;
+		Coord dirt[] = {new Coord(0,2), new Coord(1,3), new Coord(3,0), new Coord(2,1), new Coord(4,4)};
+		Coord obstacles[] = {new Coord(0,1), new Coord(2,2), new Coord(2,3), new Coord(2,4), new Coord(4,2)};
+		
+		State init = new State(w, h, dirt, obstacles, new Coord(0,0, 'N'));
+		
+		State ss = new State(init, init.state, init.agentPosition, "TURN_ON");
+		
+		State aa = State.ComputeSuccessor(ss, "TURN_RIGHT");
+		
+		System.out.println("Agent orientation: " + aa.agentPosition.GetDirection());
+		System.out.println("Agent position: " + aa.agentPosition.GetX() + ", " + aa.agentPosition.GetY());
+		
+		State ab = State.ComputeSuccessor(aa, "GO");
+		
+		System.out.println("Agent orientation: " + ab.agentPosition.GetDirection());
+		System.out.println("Agent position: " + ab.agentPosition.GetX() + ", " + ab.agentPosition.GetY());
+		
+		State ac = State.ComputeSuccessor(ab, "GO");
+		
+		System.out.println("Agent orientation: " + ac.agentPosition.GetDirection());
+		System.out.println("Agent position: " + ac.agentPosition.GetX() + ", " + ac.agentPosition.GetY());
+		
+		State ad = State.ComputeSuccessor(ac, "GO");
+		
+		System.out.println("Agent orientation: " + ad.agentPosition.GetDirection());
+		System.out.println("Agent position: " + ad.agentPosition.GetX() + ", " + ad.agentPosition.GetY());
+		
+		//State testStates[] = {};
+		
+		ArrayList<State> succs = State.ComputeAllSuccessors(ad);
+		
+		for(State s: succs) {
+			System.out.println("Created State from move: " + s.transition);
+		}
 	}
 }

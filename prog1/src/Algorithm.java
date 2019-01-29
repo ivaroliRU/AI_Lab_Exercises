@@ -1,7 +1,7 @@
-import java.util.ArrayList;
-
 public interface Algorithm {
 	
-	public String[] search();
+	public String[] search(State init);
+	
+	public int getCount();
 
 }
