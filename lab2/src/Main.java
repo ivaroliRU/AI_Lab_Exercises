@@ -38,29 +38,58 @@ public class Main {
 		String[] cigarettes = {"Old Gold", "Kools", "Chesterfields", "Lucky Strike", "Parliaments"};
 		String[] drink = {"Water", "Orange juice", "Tea", "Coffee", "Milk"};
 		String[] pet = {"Zebra", "Dog", "Fox", "Snails", "Horse"};
+		String[] houses = {"1", "2", "3", "4", "5"};
 		
 		// TODO create variables, e.g.,
 		// Variable var1 = new Variable("name of the variable 1");
-		// Variable var2 = new Variable("name of the variable 2");
+		Variable var1 = new Variable("colors");
+		Variable var2 = new Variable("nations");
+		Variable var3 = new Variable("cigarettes");
+		Variable var4 = new Variable("drink");
+		Variable var5 = new Variable("pet");
+		Variable var6 = new Variable("houses");
 		
 		List<Variable> variables = null;
 		// TODO add all your variables to this list, e.g.,
-		// variables.add(var1);
-		// variables.add(var2);
+		variables.add(var1);
+		variables.add(var2);
+		variables.add(var3);
+		variables.add(var4);
+		variables.add(var5);
+		variables.add(var6);
 		
 		csp = new CSP(variables);
 
 		// TODO set domains of variables, e.g.,
-		// Domain d1 = new Domain(new String[]{"foo", "bar"});
-		// csp.setDomain(var1, d1);
-		// Domain d2 = new Domain(new Integer[]{1, 2});
-		// csp.setDomain(var2, d2);
+		Domain d1 = new Domain(colors);
+		csp.setDomain(var1, d1);
+		
+		Domain d2 = new Domain(nations);
+		csp.setDomain(var2, d2);
+		
+		Domain d3 = new Domain(cigarettes);
+		csp.setDomain(var3, d3);
+		
+		Domain d4 = new Domain(drink);
+		csp.setDomain(var4, d4);
+		
+		Domain d5 = new Domain(pet);
+		csp.setDomain(var5, d5);
+		
+		Domain d6 = new Domain(houses);
+		csp.setDomain(var6, d6);
+		
 		
 		// TODO add constraints, e.g.,
 		// csp.addConstraint(new NotEqualConstraint(var1, var2)); // meaning var1 != var2
 		// csp.addConstraint(new EqualConstraint(var1, var2)); // meaning var1 == var2
 		// csp.addConstraint(new SuccessorConstraint(var1, var2)); // meaning var1 == var2 + 1
 		// csp.addConstraint(new DifferByOneConstraint(var1, var2)); // meaning var1 == var2 + 1 or var1 == var2 - 1 
+		csp.addConstraint(new EqualConstraint(var2, var1));
+		csp.addConstraint(new EqualConstraint(var2, var5));
+		csp.addConstraint(new EqualConstraint(var4, var1));
+		csp.addConstraint(new EqualConstraint(var2, var4));
+		
 		
 		return csp;
 	}
