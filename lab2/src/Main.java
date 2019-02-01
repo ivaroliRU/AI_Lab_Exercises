@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.search.csp.Assignment;
@@ -49,7 +50,7 @@ public class Main {
 		Variable var5 = new Variable("pet");
 		Variable var6 = new Variable("houses");
 		
-		List<Variable> variables = null;
+		ArrayList<Variable> variables = new ArrayList<Variable>();
 		// TODO add all your variables to this list, e.g.,
 		variables.add(var1);
 		variables.add(var2);
@@ -89,7 +90,16 @@ public class Main {
 		csp.addConstraint(new EqualConstraint(var2, var5));
 		csp.addConstraint(new EqualConstraint(var4, var1));
 		csp.addConstraint(new EqualConstraint(var2, var4));
-		
+		csp.addConstraint(new DifferByOneConstraint(var1, var1));
+		csp.addConstraint(new EqualConstraint(var3, var5));
+		csp.addConstraint(new EqualConstraint(var3, var1));
+		csp.addConstraint(new EqualConstraint(var4, var6));
+		csp.addConstraint(new EqualConstraint(var2, var6));
+		csp.addConstraint(new DifferByOneConstraint(var3, var5));
+		csp.addConstraint(new DifferByOneConstraint(var3, var5));
+		csp.addConstraint(new EqualConstraint(var3, var4));
+		csp.addConstraint(new EqualConstraint(var2, var3));
+		csp.addConstraint(new DifferByOneConstraint(var2, var1));
 		
 		return csp;
 	}
