@@ -58,21 +58,21 @@ public class NanoHTTPD
 	 */
 	public Response serve( String uri, String method, Properties header, Properties parms , String data )
 	{
-		System.out.println( method + " '" + uri + "' " );
+		//System.out.println( method + " '" + uri + "' " );
 
 		Enumeration e = header.propertyNames();
 		while ( e.hasMoreElements())
 		{
 			String value = (String)e.nextElement();
-			System.out.println( "  HDR: '" + value + "' = '" +
-								header.getProperty( value ) + "'" );
+			//System.out.println( "  HDR: '" + value + "' = '" +
+			//					header.getProperty( value ) + "'" );
 		}
 		e = parms.propertyNames();
 		while ( e.hasMoreElements())
 		{
 			String value = (String)e.nextElement();
-			System.out.println( "  PRM: '" + value + "' = '" +
-								parms.getProperty( value ) + "'" );
+			//System.out.println( "  PRM: '" + value + "' = '" +
+			//					parms.getProperty( value ) + "'" );
 		}
 
 		return serveFile( uri, header, new File("."), true );
@@ -201,8 +201,8 @@ public class NanoHTTPD
 	 */
 	public static void main( String[] args )
 	{
-		System.out.println( "NanoHTTPD 1.0 (c) 2001 Jarno Elonen\n" +
-							"(Command line options: [port] [--licence])\n" );
+		//System.out.println( "NanoHTTPD 1.0 (c) 2001 Jarno Elonen\n" +
+		//					"(Command line options: [port] [--licence])\n" );
 
 		// Show licence if requested
 		int lopt = -1;
@@ -210,7 +210,7 @@ public class NanoHTTPD
 		if ( args[i].toLowerCase().endsWith( "licence" ))
 		{
 			lopt = i;
-			System.out.println( LICENCE + "\n" );
+			//System.out.println( LICENCE + "\n" );
 		}
 		
 		// Change port if requested
@@ -218,9 +218,9 @@ public class NanoHTTPD
 		if ( args.length > 0 && lopt != 0 )
 			port = Integer.parseInt( args[0] );
 		
-		if ( args.length > 1 && 
+		/*if ( args.length > 1 && 
 			 args[1].toLowerCase().endsWith( "licence" ))
-				System.out.println( LICENCE + "\n" );
+				System.out.println( LICENCE + "\n" );*/
 		
 		NanoHTTPD nh = null;
 		try
@@ -234,9 +234,9 @@ public class NanoHTTPD
 		}
 		nh.myFileDir = new File("");
 		
-		System.out.println( "Now serving files in port " + port + " from \"" +
+		/*System.out.println( "Now serving files in port " + port + " from \"" +
 							new File("").getAbsolutePath() + "\"" );
-		System.out.println( "Hit Enter to stop.\n" );
+		System.out.println( "Hit Enter to stop.\n" );*/
 				
 		try { System.in.read(); } catch( Throwable t ) {};
 	}	

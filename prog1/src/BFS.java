@@ -7,7 +7,9 @@ public class BFS implements Algorithm {
 
 	public Hashtable<String, State> visited;
     public Queue<State> frontier;//take not this is a queue not a stack
-    public int count;
+
+    private int count;
+    private int maxFrontier = 0;
     
     public BFS() {
     	frontier = new LinkedList<>();
@@ -46,11 +48,19 @@ public class BFS implements Algorithm {
 		return count;
 	}
     
+    @Override
+	public int getSpaceUsage() {
+		// TODO Auto-generated method stub
+		return maxFrontier;
+	}
+    
     public State bfs() {
     	State s = null;
     	
     	//while the frontier/agenda is not empty.....
     	while(frontier.size() > 0) {
+    		if(frontier.size() > maxFrontier)
+    			maxFrontier = frontier.size();
     		//look at the next state in the frontier
     		s = frontier.remove();
     		count++;
@@ -67,12 +77,14 @@ public class BFS implements Algorithm {
     		//if s is goal then stop and do a dance
     		boolean[] success = State.isSuccessorGoalState(s);
     		if(success[0] && !success[1]) {
+    			System.out.println("Found a goal");
     			//if this is a goal state (and not the final goal state) then
     			//remove everything from visited and go through the algorithm again
     			visited.clear();
     			
     		}
     		else if (success[1]){
+    			System.out.println("Found final");
     			return s;
     		}
     		
@@ -86,12 +98,18 @@ public class BFS implements Algorithm {
     //Tester
   	public static void main(String[] args){
   		int w = 5, h = 5;
-		Coord dirt[] = {new Coord(0,2), new Coord(1,3), new Coord(3,0), new Coord(2,1), new Coord(4,4)};
+		//Coord dirt[] = {new Coord(0,2), new Coord(1,3), new Coord(3,0), new Coord(2,1), new Coord(4,4)};
+  		Coord dirt[] = {};
 		Coord obstacles[] = {new Coord(0,1), new Coord(2,2), new Coord(2,3), new Coord(2,4), new Coord(4,2)};
 		
 		State init = new State(w, h, dirt, obstacles, new Coord(0,0, 'N'));
-  		
-  		Algorithm myDFS = new BFS();
+		boolean success[] = State.isSuccessorGoalState(init);
+		
+		if(success[1]) {
+			System.out.println("Typpi");
+		}
+		
+  		/*Algorithm myDFS = new BFS();
   		String[] path = myDFS.search(init);
   		
   		System.out.print("Path: ");
@@ -100,6 +118,6 @@ public class BFS implements Algorithm {
   			System.out.print(s + " ");
   		}
   		
-  		System.out.println("\nSize of path:" + path.length);
+  		System.out.println("\nSize of path:" + path.length);*/
   	}
 }

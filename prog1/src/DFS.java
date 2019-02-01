@@ -6,7 +6,9 @@ public class DFS implements Algorithm{
 	//using hastable to minmize lookup cost
 	public Hashtable<String, State> visited;
 	public Stack<State> frontier;
-	public int count;
+	
+	private int count;
+	private int maxFrontier = 0;
 	
 	//Constructor
 	public DFS() {
@@ -46,11 +48,20 @@ public class DFS implements Algorithm{
 		return count;
 	}
 	
+	@Override
+	public int getSpaceUsage() {
+		// TODO Auto-generated method stub
+		return maxFrontier;
+	}
+	
 	public State dfs(){	
 		State s = null;
     	
     	//while the frontier/agenda is not empty.....
     	while(frontier.size() > 0) {
+    		if(frontier.size() > maxFrontier)
+    			maxFrontier = frontier.size();
+    		
     		//look at the next state in the frontier
     		s = frontier.pop();
     		count++;

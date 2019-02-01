@@ -70,24 +70,12 @@ public class State {
 	//lookup cost in algorithms
 	@Override
 	public String toString() {
-		String id = "";
-		
-		for(int x = 0; x < width; x++) {
-			for(int y = 0; y < height; y++) {
-				id += Integer.toString(state[x][y]);
-			}
-		}
-		
-		id += Integer.toString(this.agentPosition.GetX());
-		id += Integer.toString(this.agentPosition.GetY());
-		id += this.agentPosition.GetDirection();
-		
-		if(this.parent == null) {
-			id += "init";
-		}else {
-			id += "notinit";
-		}
-
+		String id = "ND:" + Integer.toString(numOfDirt);
+		id += "PosX:" + Integer.toString(this.agentPosition.x);
+		id += "PosY:" + Integer.toString(this.agentPosition.y);
+		id += "dir:" + Integer.toString(this.agentPosition.dir);
+		id += "On:";
+		id += (parent != null)? "Y": "N";
 		return id;
 	}
 	

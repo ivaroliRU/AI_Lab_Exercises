@@ -6,7 +6,9 @@ public class AStar  implements Algorithm {
 	public Hashtable<String, State> visited;
 	public Hashtable<String, State> inFrontier;
     public PriorityQueue<Entry> frontier;
-    public int count;
+
+    private int count;
+    private int maxFrontier = 0;
     
     public AStar() {
     	frontier = new PriorityQueue<Entry>();
@@ -45,11 +47,19 @@ public class AStar  implements Algorithm {
 		return count;
 	}
     
+    @Override
+	public int getSpaceUsage() {
+		// TODO Auto-generated method stub
+		return maxFrontier;
+	}
+    
 	public State astar() {
 		State s = null;
     	
     	//while the frontier/agenda is not empty.....
     	while(frontier.size() > 0) {
+    		if(frontier.size() > maxFrontier)
+    			maxFrontier = frontier.size();
     		//look at the next state in the frontier
     		Entry e = frontier.poll();
     		s = e.value;

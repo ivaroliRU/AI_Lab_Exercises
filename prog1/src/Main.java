@@ -12,23 +12,29 @@ public class Main {
 		if(args.length > 0) {
 			switch(args[0]) {
 			case "bfs":
+				System.out.println("Running BFS");
 				algo = new BFS();
 				break;
 			case "dfs":
+				System.out.println("Running DFS");
 				algo = new DFS();
 				break;
 			case "ucs":
+				System.out.println("Running UCS");
 				algo = new UCS();
 				break;
 			case "astar":
+				System.out.println("Running A*");
 				algo = new AStar();
 				break;
 			default:
+				System.out.println("Running BFS");
 				algo = new BFS();
 				break;
 			}
 		}
 		else {
+			System.out.println("Running BFS");
 			algo = new BFS();//default algo is BFS
 		}
 		
@@ -37,9 +43,6 @@ public class Main {
 			Agent agent = new RealAgent(algo);
 
 			int port=4001;
-			if(args.length>=1){
-				port=Integer.parseInt(args[0]);
-			}
 			GamePlayer gp=new GamePlayer(port, agent);
 			gp.waitForExit();
 		}catch(Exception ex){
