@@ -39,67 +39,239 @@ public class Main {
 		String[] cigarettes = {"Old Gold", "Kools", "Chesterfields", "Lucky Strike", "Parliaments"};
 		String[] drink = {"Water", "Orange juice", "Tea", "Coffee", "Milk"};
 		String[] pet = {"Zebra", "Dog", "Fox", "Snails", "Horse"};
-		String[] houses = {"1", "2", "3", "4", "5"};
 		
 		// TODO create variables, e.g.,
 		// Variable var1 = new Variable("name of the variable 1");
-		Variable var1 = new Variable("colors");
-		Variable var2 = new Variable("nations");
-		Variable var3 = new Variable("cigarettes");
-		Variable var4 = new Variable("drink");
-		Variable var5 = new Variable("pet");
-		Variable var6 = new Variable("houses");
+		// Variable var2 = new Variable("name of the variable 2");
 		
-		ArrayList<Variable> variables = new ArrayList<Variable>();
+		Variable ColorVarRed = new Variable("Red");
+		Variable ColorVarGreen = new Variable("Green");
+		Variable ColorVarIvory = new Variable("Ivory");
+		Variable ColorVarYellow = new Variable("Yellow");
+		Variable ColorVarBlue = new Variable("Blue");
+		
+		Variable NationsVarEng = new Variable("Englis");
+		Variable NationsVarSpan = new Variable("Spanish");
+		Variable NationsVarNo = new Variable("Norsk");
+		Variable NationsVarUkr = new Variable("Ukranian");
+		Variable NationsVarJap = new Variable("Japanese");
+		
+		Variable CigVarOG = new Variable("Old Gold");
+		Variable CigVarKools = new Variable("Kools");
+		Variable CigVarChest = new Variable("Chesterfields");
+		Variable CigVarLS = new Variable("Lucky Strike");
+		Variable CigVarPar = new Variable("Parliaments");
+		
+		Variable DrinkVarW = new Variable("Water");
+		Variable DrinkVarOJ = new Variable("Orange Juice");
+		Variable DrinkVarTea = new Variable("Tea");
+		Variable DrinkVarCo = new Variable("Coffee");
+		Variable DrinkVarMi = new Variable("Milk");
+		
+		Variable petVarZebra = new Variable("Zebra");
+		Variable petVarDog = new Variable("Dog");
+		Variable petVarFox = new Variable("Fox");
+		Variable petVarSnail = new Variable("Snail");
+		Variable petVarHorse = new Variable("Horse");
+		
+		
+		List<Variable> variables = new ArrayList<Variable>();
 		// TODO add all your variables to this list, e.g.,
-		variables.add(var1);
-		variables.add(var2);
-		variables.add(var3);
-		variables.add(var4);
-		variables.add(var5);
-		variables.add(var6);
+		variables.add(ColorVarRed);
+		variables.add(ColorVarGreen);
+		variables.add(ColorVarIvory);
+		variables.add(ColorVarBlue);
+		variables.add(ColorVarYellow);
+		
+		variables.add(NationsVarEng);
+		variables.add(NationsVarJap);
+		variables.add(NationsVarNo);
+		variables.add(NationsVarSpan);
+		variables.add(NationsVarUkr);
+		
+		variables.add(CigVarOG);
+		variables.add(CigVarKools);
+		variables.add(CigVarChest);
+		variables.add(CigVarLS);
+		variables.add(CigVarPar);
+		
+		variables.add(DrinkVarW);
+		variables.add(DrinkVarOJ);
+		variables.add(DrinkVarTea);
+		variables.add(DrinkVarCo);
+		variables.add(DrinkVarMi);
+		
+		variables.add(petVarZebra);
+		variables.add(petVarDog);
+		variables.add(petVarFox);
+		variables.add(petVarSnail);
+		variables.add(petVarHorse);
+		
 		
 		csp = new CSP(variables);
 
 		// TODO set domains of variables, e.g.,
-		Domain d1 = new Domain(colors);
-		csp.setDomain(var1, d1);
+		// Domain d1 = new Domain(new String[]{"foo", "bar"});
+		// csp.setDomain(var1, d1);
+		// Domain d2 = new Domain(new Integer[]{1, 2});
+		// csp.setDomain(var2, d2);
 		
-		Domain d2 = new Domain(nations);
-		csp.setDomain(var2, d2);
+		//**COLORS**
+		Domain RedDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(ColorVarRed, RedDomain);
 		
-		Domain d3 = new Domain(cigarettes);
-		csp.setDomain(var3, d3);
+		Domain GreenDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(ColorVarGreen, GreenDomain);
 		
-		Domain d4 = new Domain(drink);
-		csp.setDomain(var4, d4);
+		Domain IvoryDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(ColorVarIvory, IvoryDomain);
 		
-		Domain d5 = new Domain(pet);
-		csp.setDomain(var5, d5);
+		Domain YellowDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(ColorVarYellow, YellowDomain);
 		
-		Domain d6 = new Domain(houses);
-		csp.setDomain(var6, d6);
+		Domain BlueDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(ColorVarBlue, BlueDomain);
 		
+		//**NATIONS**
+		Domain EnglishDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(NationsVarEng, EnglishDomain);
+		
+		Domain SpanishDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(NationsVarSpan, SpanishDomain);
+		
+		Domain NorskDomain = new Domain(new Integer[]{1});
+		csp.setDomain(NationsVarNo, NorskDomain);
+		
+		Domain UkrainianDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(NationsVarUkr, UkrainianDomain);
+		
+		Domain JapaneseDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(NationsVarJap, JapaneseDomain);
+		
+		//**CIGARETTES**
+		Domain OGDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(CigVarOG, OGDomain);
+		
+		Domain KoolsDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(CigVarKools, KoolsDomain);
+		
+		Domain ChestDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(CigVarChest, ChestDomain);
+		
+		Domain LSDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(CigVarLS, LSDomain);
+		
+		Domain ParDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(CigVarPar, ParDomain);
+		
+		//**DRINKS**
+		Domain WaterDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(DrinkVarW, WaterDomain);
+		
+		Domain OJDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(DrinkVarOJ, OJDomain);
+		
+		Domain TeaDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(DrinkVarTea, TeaDomain);
+		
+		Domain CoffeeDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(DrinkVarCo, CoffeeDomain);
+		
+		Domain MilkDomain = new Domain(new Integer[]{3});
+		csp.setDomain(DrinkVarMi, MilkDomain);
+		
+		//**PETS**
+		Domain ZebraDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(petVarZebra, ZebraDomain);
+		
+		Domain DogDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(petVarDog, DogDomain);
+		
+		Domain FoxDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(petVarFox, FoxDomain);
+		
+		Domain SnailDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(petVarSnail, SnailDomain);
+		
+		Domain HorseDomain = new Domain(new Integer[]{1, 2, 3, 4, 5});
+		csp.setDomain(petVarHorse, HorseDomain);
 		
 		// TODO add constraints, e.g.,
 		// csp.addConstraint(new NotEqualConstraint(var1, var2)); // meaning var1 != var2
 		// csp.addConstraint(new EqualConstraint(var1, var2)); // meaning var1 == var2
 		// csp.addConstraint(new SuccessorConstraint(var1, var2)); // meaning var1 == var2 + 1
 		// csp.addConstraint(new DifferByOneConstraint(var1, var2)); // meaning var1 == var2 + 1 or var1 == var2 - 1 
-		csp.addConstraint(new EqualConstraint(var2, var1));
-		csp.addConstraint(new EqualConstraint(var2, var5));
-		csp.addConstraint(new EqualConstraint(var4, var1));
-		csp.addConstraint(new EqualConstraint(var2, var4));
-		csp.addConstraint(new DifferByOneConstraint(var1, var1));
-		csp.addConstraint(new EqualConstraint(var3, var5));
-		csp.addConstraint(new EqualConstraint(var3, var1));
-		csp.addConstraint(new EqualConstraint(var4, var6));
-		csp.addConstraint(new EqualConstraint(var2, var6));
-		csp.addConstraint(new DifferByOneConstraint(var3, var5));
-		csp.addConstraint(new DifferByOneConstraint(var3, var5));
-		csp.addConstraint(new EqualConstraint(var3, var4));
-		csp.addConstraint(new EqualConstraint(var2, var3));
-		csp.addConstraint(new DifferByOneConstraint(var2, var1));
+		
+		// **NOTHING CAN BE THE SAME AS ANOTHER THING CONSTRAINTS**
+		// This is getting very tedious btw...
+		csp.addConstraint(new NotEqualConstraint(ColorVarBlue, ColorVarGreen));
+		csp.addConstraint(new NotEqualConstraint(ColorVarBlue, ColorVarRed));
+		csp.addConstraint(new NotEqualConstraint(ColorVarBlue, ColorVarIvory));
+		csp.addConstraint(new NotEqualConstraint(ColorVarBlue, ColorVarYellow));
+		csp.addConstraint(new NotEqualConstraint(ColorVarRed, ColorVarGreen));
+		csp.addConstraint(new NotEqualConstraint(ColorVarRed, ColorVarYellow));
+		csp.addConstraint(new NotEqualConstraint(ColorVarRed, ColorVarIvory));
+		csp.addConstraint(new NotEqualConstraint(ColorVarGreen, ColorVarYellow));
+		csp.addConstraint(new NotEqualConstraint(ColorVarGreen, ColorVarIvory));
+		csp.addConstraint(new NotEqualConstraint(ColorVarYellow, ColorVarIvory));
+
+		csp.addConstraint(new NotEqualConstraint(NationsVarEng, NationsVarSpan));
+		csp.addConstraint(new NotEqualConstraint(NationsVarEng, NationsVarNo));
+		csp.addConstraint(new NotEqualConstraint(NationsVarEng, NationsVarUkr));
+		csp.addConstraint(new NotEqualConstraint(NationsVarEng, NationsVarJap));
+		csp.addConstraint(new NotEqualConstraint(NationsVarSpan, NationsVarNo));
+		csp.addConstraint(new NotEqualConstraint(NationsVarSpan, NationsVarUkr));
+		csp.addConstraint(new NotEqualConstraint(NationsVarSpan, NationsVarJap));
+		csp.addConstraint(new NotEqualConstraint(NationsVarNo, NationsVarUkr));
+		csp.addConstraint(new NotEqualConstraint(NationsVarNo, NationsVarJap));
+		csp.addConstraint(new NotEqualConstraint(NationsVarUkr, NationsVarJap));
+
+		csp.addConstraint(new NotEqualConstraint(CigVarOG, CigVarKools));
+		csp.addConstraint(new NotEqualConstraint(CigVarOG, CigVarChest));
+		csp.addConstraint(new NotEqualConstraint(CigVarOG, CigVarLS));
+		csp.addConstraint(new NotEqualConstraint(CigVarOG, CigVarPar));
+		csp.addConstraint(new NotEqualConstraint(CigVarKools, CigVarChest));
+		csp.addConstraint(new NotEqualConstraint(CigVarKools, CigVarLS));
+		csp.addConstraint(new NotEqualConstraint(CigVarKools, CigVarPar));
+		csp.addConstraint(new NotEqualConstraint(CigVarChest, CigVarLS));
+		csp.addConstraint(new NotEqualConstraint(CigVarChest, CigVarPar));
+		csp.addConstraint(new NotEqualConstraint(CigVarLS, CigVarPar));
+
+		csp.addConstraint(new NotEqualConstraint(DrinkVarW, DrinkVarOJ));
+		csp.addConstraint(new NotEqualConstraint(DrinkVarW, DrinkVarTea));
+		csp.addConstraint(new NotEqualConstraint(DrinkVarW, DrinkVarCo));
+		csp.addConstraint(new NotEqualConstraint(DrinkVarW, DrinkVarMi));
+		csp.addConstraint(new NotEqualConstraint(DrinkVarOJ, DrinkVarTea));
+		csp.addConstraint(new NotEqualConstraint(DrinkVarOJ, DrinkVarCo));
+		csp.addConstraint(new NotEqualConstraint(DrinkVarOJ, DrinkVarMi));
+		csp.addConstraint(new NotEqualConstraint(DrinkVarTea, DrinkVarCo));
+		csp.addConstraint(new NotEqualConstraint(DrinkVarTea, DrinkVarMi));
+		csp.addConstraint(new NotEqualConstraint(DrinkVarCo, DrinkVarMi));
+
+		csp.addConstraint(new NotEqualConstraint(petVarZebra, petVarDog));
+		csp.addConstraint(new NotEqualConstraint(petVarZebra, petVarFox));
+		csp.addConstraint(new NotEqualConstraint(petVarZebra, petVarSnail));
+		csp.addConstraint(new NotEqualConstraint(petVarZebra, petVarHorse));
+		csp.addConstraint(new NotEqualConstraint(petVarDog, petVarFox));
+		csp.addConstraint(new NotEqualConstraint(petVarDog, petVarSnail));
+		csp.addConstraint(new NotEqualConstraint(petVarDog, petVarHorse));
+		csp.addConstraint(new NotEqualConstraint(petVarFox, petVarSnail));
+		csp.addConstraint(new NotEqualConstraint(petVarFox, petVarHorse));
+		csp.addConstraint(new NotEqualConstraint(petVarSnail, petVarHorse));
+		
+		//The Actuall fact constraints
+		csp.addConstraint(new EqualConstraint(ColorVarRed, NationsVarEng));
+		csp.addConstraint(new EqualConstraint(petVarDog, NationsVarSpan));
+		csp.addConstraint(new EqualConstraint(DrinkVarCo, ColorVarGreen));
+		csp.addConstraint(new EqualConstraint(DrinkVarTea, NationsVarUkr));
+		csp.addConstraint(new SuccessorConstraint(ColorVarGreen, ColorVarIvory));
+		csp.addConstraint(new EqualConstraint(CigVarOG, petVarSnail));
+		csp.addConstraint(new EqualConstraint(CigVarKools, ColorVarYellow));
+		csp.addConstraint(new DifferByOneConstraint(petVarFox, CigVarChest));
+		csp.addConstraint(new DifferByOneConstraint(CigVarKools, petVarHorse));
+		csp.addConstraint(new EqualConstraint(CigVarLS, DrinkVarOJ));
+		csp.addConstraint(new EqualConstraint(NationsVarJap, CigVarPar));
+		csp.addConstraint(new DifferByOneConstraint(NationsVarNo, ColorVarBlue));
 		
 		return csp;
 	}

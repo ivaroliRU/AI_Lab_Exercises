@@ -12,6 +12,7 @@ public class EqualConstraint extends BinaryConstraint {
 	public boolean isSatisfiedWith(Assignment assignment) {
 		Object value1 = assignment.getAssignment(var1);
 		Object value2 = assignment.getAssignment(var2);
+		
 		return value1 == null || value2 == null || value1.equals(value2);
 	}
 }
